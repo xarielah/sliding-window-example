@@ -1,7 +1,13 @@
-class SlidingWindowsExample {
+class SlidingWindowExample {
+    // Didn't want to create some fancy testing cases,
+    // just to test this on the driver function.
     public static void main(String[] args) {
         int[] arr = { 3, 1, 2, 4, 6, 99, 6, 1, 4, 555 };
-        findSubarray(arr, 555);
+        findSubarray(arr, 555); // OK
+        findSubarray(arr, 13); // OK
+        findSubarray(arr, 105); // OK
+        findSubarray(arr, 53421); // BAD
+        findSubarray(arr, 52); // BAD
 
     }
 
@@ -19,9 +25,18 @@ class SlidingWindowsExample {
         // the last number, inside the while loop we will limit it not going futher the
         // array boundries.
         while (left <= right) {
+            if (left >= arr.length || right >= arr.length) {
+                System.out.println("No subarray found for sum " + target);
+                return;
+            }
 
-            // As long as the sum is less than target, we do this
-            if (sum < target) {
+            // If during the slide we encounter our target within the array,
+            // log a message and break the loop.
+            if (arr[right] == target) {
+                System.out.println("Subarray from index " + right + " to " + right + " with sum " + target);
+                return;
+                // As long as the sum is less than target
+            } else if (sum < target) {
                 // Add the current number to the total sum,
                 // and increment the index by one.
                 sum += arr[right++];
@@ -39,8 +54,5 @@ class SlidingWindowsExample {
                 return;
             }
         }
-
-        // After iteration ends with no target found, we print this.
-        System.out.println("No subarrays found for sum " + target);
     }
 }
